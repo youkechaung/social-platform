@@ -1,0 +1,55 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:nacos-service:8848}
+        namespace: ${NACOS_NAMESPACE:prod}
+      config:
+        server-addr: ${NACOS_ADDR:nacos-service:8848}
+        namespace: ${NACOS_NAMESPACE:prod}
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:rm-xxx.mysql.rds.aliyuncs.com}:3306/social_auth?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:your-password}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 20000
+  data:
+    redis:
+      host: ${REDIS_HOST:r-xxx.redis.rds.aliyuncs.com}
+      port: 6379
+      password: ${REDIS_PASSWORD:your-password}
+      database: 0
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+security:
+  ignore-urls:
+    - /auth/login
+    - /auth/register
+    - /actuator/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    com.socialplatform: INFO
+  file:
+    name: /var/log/social-platform/auth-service.log
