@@ -2,6 +2,7 @@ package com.socialplatform.auth.controller;
 
 import com.socialplatform.auth.dto.LoginRequest;
 import com.socialplatform.auth.dto.SignUpRequest;
+import com.socialplatform.auth.model.User;
 import com.socialplatform.auth.security.JwtTokenProvider;
 import com.socialplatform.auth.service.UserService;
 import com.socialplatform.common.api.Result;
@@ -14,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -47,7 +48,12 @@ public class AuthController {
             return Result.fail("邮箱已被注册");
         }
 
-        userService.createUser(signUpRequest);
+        // 创建新用户
+        User user = userService.createUser(
+            signUpRequest.getUsername(),
+            signUpRequest.getEmail(),
+            signUpRequest.getPassword()
+        );
         return Result.success();
     }
 

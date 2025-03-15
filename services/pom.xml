@@ -10,13 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>gateway</module>
-        <module>auth</module>
-        <module>user</module>
-        <module>message</module>
-        <module>notification</module>
-        <module>search</module>
         <module>common</module>
+        <module>auth</module>
+        <module>message</module>
     </modules>
 
     <properties>
@@ -30,6 +26,7 @@
         <mybatis-plus.version>3.5.4</mybatis-plus.version>
         <jwt.version>0.11.5</jwt.version>
         <hutool.version>5.8.23</hutool.version>
+        <lombok.version>1.18.30</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -66,7 +63,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -85,6 +83,13 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
